@@ -1,6 +1,7 @@
 ﻿using Entity.Domain.Interfaces;
 using Entity.Domain.Models.Auth;
 using Entity.Domain.Models.Implements;
+using ModelSecurity.Entity.Domain.Models.Implements;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -58,9 +59,20 @@ namespace Entity.Infrastructure.Contexts
                 .HasOne(u => u.Person)
                 .WithOne(p => p.User)
                 .HasForeignKey<User>(u => u.PersonId)
-                .OnDelete(DeleteBehavior.Cascade); // o Restrict, según lo que desees
+                .OnDelete(DeleteBehavior.Cascade);
 
-           
+            // Configurar relaciones de música para evitar cascadas múltiples en SQL Server
+            modelBuilder.Entity<ArtistSong>()
+                .HasOne(a_s => a_s.Song)
+                .WithMany(s => s.ArtistSongs)
+                .HasForeignKey(a_s => a_s.SongId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<PlaylistSong>()
+                .HasOne(ps => ps.Song)
+                .WithMany(s => s.PlaylistSongs)
+                .HasForeignKey(ps => ps.SongId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

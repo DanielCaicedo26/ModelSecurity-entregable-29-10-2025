@@ -1,6 +1,7 @@
 ﻿using Entity.Domain.Interfaces;
 using Entity.Domain.Models.Auth;
 using Entity.Domain.Models.Implements;
+using ModelSecurity.Entity.Domain.Models.Implements;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -46,7 +47,15 @@ namespace Entity.Infrastructure.Contexts
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<RolFormPermission> RolFormPermissions { get; set; }
         public DbSet<FormModule> FormModules { get; set; }
-        //public DbSet<TouristicAttraction> TouristicAttraction { get; set; }
+        
+        // Music entities
+        public DbSet<Artist> Artists { get; set; }
+        public DbSet<Album> Albums { get; set; }
+        public DbSet<Song> Songs { get; set; }
+        public DbSet<Genre> Genres { get; set; }
+        public DbSet<Playlist> Playlists { get; set; }
+        public DbSet<ArtistSong> ArtistSongs { get; set; }
+        public DbSet<PlaylistSong> PlaylistSongs { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -55,9 +64,20 @@ namespace Entity.Infrastructure.Contexts
                 .HasOne(u => u.Person)
                 .WithOne(p => p.User)
                 .HasForeignKey<User>(u => u.PersonId)
-                .OnDelete(DeleteBehavior.Cascade); // o Restrict, según lo que desees
+                .OnDelete(DeleteBehavior.Cascade);
 
+            // Configurar relaciones de música para evitar cascadas múltiples
+            modelBuilder.Entity<ArtistSong>()
+                .HasOne(a_s => a_s.Song)
+                .WithMany(s => s.ArtistSongs)
+                .HasForeignKey(a_s => a_s.SongId)
+                .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<PlaylistSong>()
+                .HasOne(ps => ps.Song)
+                .WithMany(s => s.PlaylistSongs)
+                .HasForeignKey(ps => ps.SongId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
