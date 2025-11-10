@@ -4,6 +4,8 @@ using Entity.Domain.Models.Implements;
 using Entity.DTOs.Auth;
 using Entity.DTOs.Default;
 using Entity.DTOs.Select;
+using ModelSecurity.Entity.Domain.Models.Implements;
+
 
 namespace Helpers.AutoMapper
 {
@@ -68,7 +70,8 @@ namespace Helpers.AutoMapper
 
             CreateMap<Playlist, PlaylistDto>().ReverseMap();
             CreateMap<Playlist, PlaylistSelectDto>()
-                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.Username))
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User != null ? src.User.Username : string.Empty))
+
                 .ReverseMap();
 
             CreateMap<ArtistSong, ArtistSongDto>().ReverseMap();

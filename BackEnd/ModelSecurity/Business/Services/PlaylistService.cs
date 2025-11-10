@@ -6,6 +6,7 @@ using Entity.Domain.Models.Implements;
 using Entity.DTOs.Default;
 using Entity.DTOs.Select;
 using Microsoft.Extensions.Logging;
+using ModelSecurity.Entity.Domain.Models.Implements;
 
 namespace Business.Services
 {

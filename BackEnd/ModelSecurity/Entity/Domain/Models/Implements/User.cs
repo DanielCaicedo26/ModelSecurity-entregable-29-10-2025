@@ -4,6 +4,8 @@ namespace Entity.Domain.Models.Implements
 {
     public class User : BaseModel
     {
+        public string Username;
+
         public string? Password { get; set; } 
         public string Email { get; set; }
 
