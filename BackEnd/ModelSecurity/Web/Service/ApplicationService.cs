@@ -31,6 +31,15 @@ namespace Web.Service
             services.AddScoped<IFormModuleService, FormModuleService>();
             services.AddScoped<IRolFormPermissionService, RolFormPermissionService>();
 
+            // Music services
+            services.AddScoped<IArtistService, ArtistService>();
+            services.AddScoped<IAlbumService, AlbumService>();
+            services.AddScoped<ISongService, SongService>();
+            services.AddScoped<IGenreService, GenreService>();
+            services.AddScoped<IPlaylistService, PlaylistService>();
+            services.AddScoped<IArtistSongService, ArtistSongService>();
+            services.AddScoped<IPlaylistSongService, PlaylistSongService>();
+
             //Jwt
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IToken, TokenBusiness>();
@@ -46,6 +55,14 @@ namespace Web.Service
             services.AddScoped<IFormModuleRepository, FormModuleRepository>();
             services.AddScoped<IRolFormPermissionRepository, RolFormPermissionRepository>();
 
+            // Music repositories
+            services.AddScoped<IArtistRepository, ArtistRepository>();
+            services.AddScoped<IAlbumRepository, AlbumRepository>();
+            services.AddScoped<ISongRepository, SongRepository>();
+            services.AddScoped<IGenreRepository, GenreRepository>();
+            services.AddScoped<IPlaylistRepository, PlaylistRepository>();
+            services.AddScoped<IArtistSongRepository, ArtistSongRepository>();
+            services.AddScoped<IPlaylistSongRepository, PlaylistSongRepository>();
 
             services.AddScoped<IUserRepository, UserRepository>();
 
