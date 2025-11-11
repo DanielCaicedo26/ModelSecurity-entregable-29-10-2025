@@ -38,6 +38,7 @@ namespace Data.Services
             bool suceeded = false;
 
             var user = await _dbSet
+                .Include(u => u.Person)
                 .FirstOrDefaultAsync(user =>
                             user.Email == loginDto.Email &&
                             user.Password == loginDto.Password);

@@ -83,9 +83,9 @@ namespace Business.Custom
         /// </list>
         /// </summary>
         /// <param name="dto">Credenciales del usuario (correo electrónico y contraseña).</param>
-        /// <returns>Tupla con el Access Token, Refresh Token y CSRF Token generados.</returns>
+        /// <returns>Tupla con el Access Token, Refresh Token, CSRF Token, FirstName y LastName del usuario.</returns>
         /// <exception cref="BusinessException">Si las credenciales son incorrectas o falla el proceso de generación.</exception>
-        public async Task<(string AccessToken, string RefreshToken, string CsrfToken)> GenerateTokensAsync(LoginUserDto dto)
+        public async Task<(string AccessToken, string RefreshToken, string CsrfToken, string FirstName, string LastName)> GenerateTokensAsync(LoginUserDto dto)
         {
             dto.Password = EncriptePassword.EncripteSHA256(dto.Password);
             var user = await _userData.LoginUser(dto);
@@ -119,7 +119,7 @@ namespace Business.Custom
 
             var csrf = TokenHelpers.GenerateSecureRandomUrlToken(32);
 
-            return (accessToken, refreshPlain, csrf);
+            return (accessToken, refreshPlain, csrf, user.Person.FirstName, user.Person.LastName);
         }
 
         /// <summary>

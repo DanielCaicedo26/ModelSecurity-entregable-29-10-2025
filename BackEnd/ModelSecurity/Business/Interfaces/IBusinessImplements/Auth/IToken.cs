@@ -7,9 +7,9 @@ namespace Business.Interfaces.IBusinessImplements.Auth
     {
         //Task<string> GenerateToken(LoginUserDto dto);
         /// <summary>
-        /// Valida credenciales y emite Access + Refresh + CSRF.
+        /// Valida credenciales y emite Access + Refresh + CSRF junto con información del usuario.
         /// </summary>
-        Task<(string AccessToken, string RefreshToken, string CsrfToken)> GenerateTokensAsync(LoginUserDto dto);
+        Task<(string AccessToken, string RefreshToken, string CsrfToken, string FirstName, string LastName)> GenerateTokensAsync(LoginUserDto dto);
 
         /// <summary>
         /// Rota el refresh token y devuelve nuevo Access + Refresh.

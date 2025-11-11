@@ -1,10 +1,13 @@
 ﻿using Business.Interfaces.IBusinessImplements.Auth;
+using Data.Interfaces.IDataImplement;
+using Data.Interfaces.IDataImplement.Auth;
 using Entity.Domain.Config;
 using Entity.DTOs.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using ModelSecurity.Infrastructure.Cookies.Implements;
+using Utilities.Custom;
 
 namespace ModelSecurity.Controllers.Implements.Auth
 {
@@ -66,10 +69,12 @@ namespace ModelSecurity.Controllers.Implements.Auth
         {
             try
             {
-                var (access, refresh, csrf) = await _token.GenerateTokensAsync(dto);
+                // Generar los tokens y obtener información del usuario
+                var (access, refresh, csrf, firstName, lastName) = await _token.GenerateTokensAsync(dto);
 
                 var now = DateTime.UtcNow;
 
+                // Guardar tokens en cookies HTTP-only (más seguro)
                 Response.Cookies.Append(
                     _cookieSettings.AccessTokenName,
                     access,
@@ -85,7 +90,13 @@ namespace ModelSecurity.Controllers.Implements.Auth
                     csrf,
                     _cookieFactory.CsrfCookieOptions(now.AddDays(_jwt.RefreshTokenExpirationDays)));
 
-                return Ok(new { isSuccess = true, message = "Login exitoso" });
+                // Devolver el token junto con el nombre y apellido del usuario
+                return Ok(new {
+                    token = access,
+                    firstName = firstName,
+                    lastName = lastName
+                });
+
             }
             catch (UnauthorizedAccessException)
             {
