@@ -3,6 +3,7 @@
     using Entity.Domain.Enums;
     using Entity.DTOs.Base;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
     using Utilities.Exceptions;
 
     namespace Web.Controllers.BaseController
@@ -13,9 +14,9 @@
         where TService : class
         {
             protected readonly TService _service;
-            protected readonly ILogger _logger;
+            protected readonly ILogger<BaseController<TSelect, TCreate, TService>> _logger;
 
-            protected BaseController(TService service, ILogger logger)
+            protected BaseController(TService service, ILogger<BaseController<TSelect, TCreate, TService>> logger)
             {
                 _service = service;
                 _logger = logger;

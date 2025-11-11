@@ -5,6 +5,7 @@ using Entity.DTOs.Default;
 using Entity.DTOs.Select;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Web.Controllers.ControllersBase.Web.Controllers.BaseController;
 
 namespace Web.Controllers.Implements
@@ -16,7 +17,7 @@ namespace Web.Controllers.Implements
 
     public class RolController : BaseController<RolSelectDto,RolDto, IRolService>
     {
-        public RolController(IRolService service, ILogger logger) : base(service, logger)
+        public RolController(IRolService service, ILogger<BaseController<RolSelectDto, RolDto, IRolService>> logger) : base(service, logger)
         {
         }
 
