@@ -86,7 +86,7 @@ namespace Helpers.AutoMapper
                 .ForMember(dest => dest.SongName, opt => opt.MapFrom(src => src.Song.Name))
                 .ReverseMap();
 
-            //CreateMap<TouristicAttraction, TouristicAttractionApiDto>().ReverseMap();
+            
         }
 
     }
