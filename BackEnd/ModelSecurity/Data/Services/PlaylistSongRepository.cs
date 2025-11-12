@@ -18,6 +18,10 @@ namespace Data.Services
             return await _context.Set<PlaylistSong>()
                         .Include(playlistSong => playlistSong.Playlist)
                         .Include(playlistSong => playlistSong.Song)
+                            .ThenInclude(song => song.Album)
+                                .ThenInclude(album => album.Artist)
+                        .Include(playlistSong => playlistSong.Song)
+                            .ThenInclude(song => song.Genre)
                         .Where(playlistSong => playlistSong.IsDeleted == false)
                         .OrderBy(playlistSong => playlistSong.OrderIndex)
                         .ToListAsync();
@@ -28,6 +32,10 @@ namespace Data.Services
             return await _context.Set<PlaylistSong>()
                         .Include(playlistSong => playlistSong.Playlist)
                         .Include(playlistSong => playlistSong.Song)
+                            .ThenInclude(song => song.Album)
+                                .ThenInclude(album => album.Artist)
+                        .Include(playlistSong => playlistSong.Song)
+                            .ThenInclude(song => song.Genre)
                         .Where(playlistSong => playlistSong.IsDeleted == true)
                         .OrderBy(playlistSong => playlistSong.OrderIndex)
                         .ToListAsync();
@@ -38,6 +46,10 @@ namespace Data.Services
             return await _context.Set<PlaylistSong>()
                       .Include(playlistSong => playlistSong.Playlist)
                       .Include(playlistSong => playlistSong.Song)
+                            .ThenInclude(song => song.Album)
+                                .ThenInclude(album => album.Artist)
+                      .Include(playlistSong => playlistSong.Song)
+                            .ThenInclude(song => song.Genre)
                       .Where(playlistSong => playlistSong.Id == id)
                       .FirstOrDefaultAsync(playlistSong => playlistSong.IsDeleted == false);
         }

@@ -11,5 +11,9 @@ namespace Entity.DTOs.Select
         public string AlbumName { get; set; }
         public int GenreId { get; set; }
         public string GenreName { get; set; }
+
+        // Objetos completos anidados para incluir toda la información
+        public AlbumSelectDto Album { get; set; }
+        public GenreSelectDto Genre { get; set; }
     }
 }

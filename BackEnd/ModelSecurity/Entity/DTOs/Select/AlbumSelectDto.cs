@@ -9,5 +9,8 @@ namespace Entity.DTOs.Select
         public string CoverImageUrl { get; set; }
         public int ArtistId { get; set; }
         public string ArtistName { get; set; }
+
+        // Objeto completo del artista
+        public ArtistSelectDto Artist { get; set; }
     }
 }

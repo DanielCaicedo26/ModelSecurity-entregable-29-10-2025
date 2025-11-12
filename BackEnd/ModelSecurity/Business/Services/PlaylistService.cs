@@ -1,7 +1,7 @@
 using AutoMapper;
 using Business.Interfaces.IBusinessImplements;
 using Business.Repository;
-using Data.Interfaces.DataBasic;
+using Data.Interfaces.IDataImplement;
 using Entity.Domain.Models.Implements;
 using Entity.DTOs.Default;
 using Entity.DTOs.Select;
@@ -13,9 +13,9 @@ namespace Business.Services
     public class PlaylistService : BusinessBasic<PlaylistSelectDto, PlaylistDto, Playlist>, IPlaylistService
     {
         private readonly ILogger<PlaylistService> _logger;
-        protected readonly IData<Playlist> Data;
+        protected new readonly IPlaylistRepository Data;
 
-        public PlaylistService(IData<Playlist> data, IMapper mapper, ILogger<PlaylistService> logger) : base(data, mapper)
+        public PlaylistService(IPlaylistRepository data, IMapper mapper, ILogger<PlaylistService> logger) : base(data, mapper)
         {
             Data = data;
             _logger = logger;

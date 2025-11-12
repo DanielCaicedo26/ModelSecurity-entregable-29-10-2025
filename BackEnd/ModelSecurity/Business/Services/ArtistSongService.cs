@@ -1,7 +1,7 @@
 using AutoMapper;
 using Business.Interfaces.IBusinessImplements;
 using Business.Repository;
-using Data.Interfaces.DataBasic;
+using Data.Interfaces.IDataImplement;
 using Entity.Domain.Models.Implements;
 using Entity.DTOs.Default;
 using Entity.DTOs.Select;
@@ -13,9 +13,9 @@ namespace Business.Services
     public class ArtistSongService : BusinessBasic<ArtistSongSelectDto, ArtistSongDto, ArtistSong>, IArtistSongService
     {
         private readonly ILogger<ArtistSongService> _logger;
-        protected readonly IData<ArtistSong> Data;
+        protected new readonly IArtistSongRepository Data;
 
-        public ArtistSongService(IData<ArtistSong> data, IMapper mapper, ILogger<ArtistSongService> logger) : base(data, mapper)
+        public ArtistSongService(IArtistSongRepository data, IMapper mapper, ILogger<ArtistSongService> logger) : base(data, mapper)
         {
             Data = data;
             _logger = logger;
